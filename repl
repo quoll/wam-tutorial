@@ -1,0 +1,8 @@
+(ns wam.types)
+(require '[wam.types :as t :refer :all] :reload-all)
+(def a (->Structure "foo" ["bar"]))
+(s/valid? ::structure a)
+(require '[instaparse.core :as insta])
+(insta/defparser p (clojure.java.io/resource "grammar.bnf"))
+(p "foo(bar, baz)")
+

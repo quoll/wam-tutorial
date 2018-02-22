@@ -1,0 +1,8 @@
+structure = functor <lparen> subterm <ws> ( <',' ws> subterm <ws> )* <rparen>
+functor = constant
+subterm = variable | constant | structure
+variable = #'[A-Z][a-zA-Z]*'
+constant = #'[a-z][a-zA-Z]*'
+lparen = '(' ws
+rparen = ')' ws
+ws = #'[\s\t\r\n]*'
