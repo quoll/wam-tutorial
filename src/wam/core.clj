@@ -83,7 +83,7 @@
   "Build a heap structure to describe the query."
   [reg->term struct-regs]
   (loop [[term-reg & rregs] struct-regs store {:regs {} :heap []}]
-    (if-not (seq rregs)
+    (if-not term-reg
       store
       (recur rregs (add-query-structure reg->term term-reg store)))))
 

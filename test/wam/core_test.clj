@@ -77,3 +77,27 @@
               [(->Constant "f") 2]
               (->Ref 0)
               (->Ref 4)]}))))
+
+(deftest test-build-query-heap
+  (let [reg->term {:X1 (->Structure (->Constant "p") [:X2 :X3 :X4])
+                   :X3 (->Structure (->Constant "h") [:X2 :X5])
+                   :X4 (->Structure (->Constant "f") [:X5])}
+        struct-regs [:X3 :X4 :X1]
+        {:keys [regs heap]} (build-query-heap reg->term struct-regs)]
+    (is (= regs {:X1 (->Struct 8)
+                 :X2 (->Ref 2)
+                 :X3 (->Struct 1)
+                 :X4 (->Struct 5)
+                 :X5 (->Ref 3)}))
+    (is (= heap [(->Struct 1)
+                 [(->Constant "h") 2]
+                 (->Ref 2)
+                 (->Ref 3)
+                 (->Struct 5)
+                 [(->Constant "f") 1]
+                 (->Ref 3)
+                 (->Struct 8)
+                 [(->Constant "p") 3]
+                 (->Ref 2)
+                 (->Struct 1)
+                 (->Struct 5)]))))
